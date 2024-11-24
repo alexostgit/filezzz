@@ -58,10 +58,11 @@ async function loadFiles() {
 
         files.forEach(file => {
             const listItem = document.createElement('li');
+            const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2); // Convert bytes to MB
 
             listItem.innerHTML = `
-                <a class="download-link" href="/download?fileName=${file}" download>${file}</a>
-                <button class="delete-button" data-filename="${file}">
+                <a class="download-link" href="/download?fileName=${file.name}" download>${file.name} | ${fileSizeMB}MB</a>
+                <button class="delete-button" data-filename="${file.name}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 24 24">
                         <path fill="red" d="M19 7L5 21M5 7l14 14" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
