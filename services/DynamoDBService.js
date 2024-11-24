@@ -13,12 +13,14 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient();
 const tableName = config.DYNAMODB_TABLE_NAME;
 
 const DynamoDBService = {
-    logChange: async (message) => {
+    logChange: async (message, action, user) => {
         const params = {
             TableName: tableName,
             Item: {
                 id: Date.now().toString(), // Unique ID
                 message: message,
+                action: action,
+                user: user,
                 timestamp: new Date().toISOString(), // ISO format for easy sorting
             }
         };

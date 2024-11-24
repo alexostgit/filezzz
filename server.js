@@ -23,9 +23,10 @@ app.set('view engine', 'ejs');
 
 const upload = multer();
 
-// Home route for the file upload interface
+// Home route
 app.get('/', (req, res) => {
-    res.render('index');
+    const currentUser = req.user ? req.user.displayName : 'SERVER FALLBACK'; // Use Google OAuth username if logged in, else "Anonym"
+    res.render('index', { currentUser });
 });
 
 // Route to list files for download
@@ -38,8 +39,11 @@ app.get('/files', async (req, res) => {
     }
 });
 
+
+
 app.get('/download', async (req, res) => {
-    const { fileName } = req.query;
+    const fileName = req.query.fileName;
+    const user = req.query.user || 'Downloader anonymous'; // Get the user from the request body, default to 'anonymous'
 
     if (!fileName) {
         return res.status(400).send('File name is required.');
@@ -54,7 +58,7 @@ app.get('/download', async (req, res) => {
         const fileStream = s3.getObject(params).createReadStream();
         res.attachment(fileName); // Set the file to be downloaded
         fileStream.pipe(res); // Pipe the file content to the response
-        await TickerService.logChange(`${fileName} downloaded.`);
+        await TickerService.logChange(`${fileName}`, 'downloaded', user);
 
     } catch (error) {
         console.error("Error downloading file:", error);
@@ -65,6 +69,7 @@ app.get('/download', async (req, res) => {
 // Route for uploading files
 app.post('/upload', upload.single('file'), async (req, res) => {
     const file = req.file;
+    const user = req.body.user || 'Uploader anonymous'; // Get the user from the request body, default to 'anonymous'
 
     if (!file) {
         return res.status(400).send("No file uploaded.");
@@ -73,9 +78,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     try {
         const result = await S3Service.uploadFile({
             name: file.originalname,
-            content: file.buffer
+            content: file.buffer,
         });
-        await TickerService.logChange(`${file.originalname} uploaded.`);
+        await TickerService.logChange(`${file.originalname}`, 'uploaded', user);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error.message);
@@ -85,13 +90,14 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 // Route for deleting files
 app.delete('/delete', async (req, res) => {
     const fileName = req.query.fileName;
+    const user = req.query.user || 'deleter anonymous'; // Get the user from the request body, default to 'anonymous'
     if (!fileName) {
         return res.status(400).send('File name is required.');
     }
 
     try {
         await S3Service.deleteFile(fileName);
-        await TickerService.logChange(`${fileName} deleted.`); // Log the deletion
+        await TickerService.logChange(`${fileName}`, 'deleted', user); // Log the deletion
         res.status(200).send(`File ${fileName} deleted successfully.`);
     } catch (error) {
         console.error("Error deleting file:", error);
@@ -111,3 +117,7 @@ app.get('/ticker', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
+

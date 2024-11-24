@@ -175,6 +175,21 @@ a:hover {
     background-color: red;
 }
 
+.file-item {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 30px 30px;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.75rem;
+    font-size: 12px;
+    width: 100%;
+}
+
+.file-item div {
+    word-break: break-all;
+}
+
+
 .notification-success {
     background-color: greenred;
 }
@@ -197,7 +212,8 @@ header {
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-card-bg);
     font-size: 32px;
-    color: var(--color-primary);
+    color: white;
+    font-weight: 700;
 }
 
 main {
@@ -209,11 +225,7 @@ h2 {
     margin-bottom: 1rem;
 }
 
-.download-link {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
-}
+
 
 .ticker tr td {
     padding: 0.5rem 1rem 0.5rem 0;
@@ -225,7 +237,6 @@ h2 {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0 0.5rem;
 }
 
 .delete-button:hover {
@@ -239,6 +250,19 @@ h2 {
 
 .ticker tr td {
     border-bottom: 1px solid white;
+    word-break: break-all;
+}
+
+.ticker tr td:first-child {
+    width: 100px;
+}
+
+.ticker tr td:nth-child(2) {
+    width: 100px;
+}
+
+.ticker tr td:last-child {
+    width: 100px;
 }
 
 .ticker thead td {
@@ -277,7 +301,7 @@ footer {
 }
 
 .file-list li {
-    margin: 5px 0;
+    margin: 8px 0;
     background: var(--color-secondary-bg);
     border-radius: 5px;
     display: flex;
@@ -288,7 +312,6 @@ footer {
     text-decoration: none;
     color: var(--color-primary);
     width: 100%;
-    padding: 8px;
 }
 
 .file-list a:hover {

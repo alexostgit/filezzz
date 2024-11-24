@@ -19,8 +19,12 @@ const S3Service = {
             Bucket: bucketName,
         };
         const data = await s3.listObjectsV2(params).promise();
-        console.log("Files in S3:", data.Contents.map(item => ({ name: item.Key, size: item.Size }))); // Log the file names
-        return data.Contents.map(item => ({ name: item.Key, size: item.Size }));
+
+
+        const files = data.Contents.map(item => ({ name: item.Key, type: item.Type, size: item.Size }));
+
+        files.sort((a, b) => a.name.localeCompare(b.name));
+        return files;
     },
     uploadFile: async (file) => {
         const params = {
