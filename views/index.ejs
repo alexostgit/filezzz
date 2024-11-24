@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cloud File Manager</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div>
+                Filezzz
+            </div>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#4a90e2">
+                    <path
+                        d="M14 2H6C5.44772 2 5 2.44772 5 3V21C5 21.5523 5.44772 22 6 22H18C18.5523 22 19 21.5523 19 21V8L14 2Z" />
+                    <path d="M13 2.5V7H18.5L13 2.5Z" />
+                </svg>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div id="notification" class="notification">
+                Notification
+            </div>
+        </div>
+        <div class="container">
+            <div class="column" id="upload-section">
+                <h2>Upload Files</h2>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input type="file" name="file" id="fileInput" class="file-input">
+                    <button type="submit" class="upload-button">Upload</button>
+                </form>
+                <div id="loader" style="display: none;">
+                    <!-- Simple spinner -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#4a90e2" stroke-width="5"
+                            stroke-dasharray="100,200" stroke-linecap="round">
+                            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                                keyTimes="0;1" values="0 25 25;360 25 25" />
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="columns">
+                <!-- Upload Files Section -->
+                <!-- Download Files Section -->
+                <div class="column" id="download-section">
+                    <h2>Files List</h2>
+                    <ul id="filelist" class="file-list">
+                        <!-- Files will be loaded here -->
+                    </ul>
+                </div>
+                <!-- Live Ticker Section -->
+                <div class="column" id="ticker-section">
+                    <h2>Recent Changes</h2>
+                    <table class="ticker">
+                        <thead>
+                            <tr>
+                                <td>Dateiname</td>
+                                <td>Zeit</td>
+                            </tr>
+                        </thead>
+                        <tbody id="ticker">
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    © 2024 OST
+                </div>
+                <div>
+                    CLDE - Cloud Development
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="/app.js"></script>
+</body>
+
+</html>
