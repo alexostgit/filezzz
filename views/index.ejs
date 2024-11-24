@@ -5,34 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS Cloud File Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
     <header>
         <div class="container">
-            <div>
-                Filezzz
+            <div class="header-content">
+                <div>
+                    Filezzz
+                </div>
+                <div>
+                    <!-- https://icons8.com/icons/set/file -->
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                        viewBox="0 0 100 100">
+                        <path fill="#c9dcf4"
+                            d="m71.99,88.11c-14.66,1.19-29.31,1.19-43.97,0-3.67-.3-6.52-3.29-6.71-6.96-1.04-20.43-1.04-40.86,0-61.3.19-3.68,3.05-6.66,6.72-6.96,9.87-.8,19.74-1.06,29.62-.78,2.13.06,4.14.98,5.62,2.52,4.46,4.66,9.01,9.34,13.6,13.94,1.47,1.47,2.33,3.45,2.39,5.53.43,15.69.24,31.37-.55,47.06-.19,3.67-3.04,6.66-6.71,6.96Z">
+                        </path>
+                        <path fill="#4a254b"
+                            d="m50,73c2.57,0,4.68-1.94,4.97-4.43.03-.3-.19-.57-.49-.57-1.73,0-7.22,0-8.95,0-.3,0-.53.27-.49.57.28,2.49,2.4,4.43,4.97,4.43Z">
+                        </path>
+                        <circle cx="39.5" cy="61.5" r="5.5" fill="#fff"></circle>
+                        <circle cx="39.5" cy="61.5" r="2.5" fill="#4a254b"></circle>
+                        <circle cx="60.5" cy="61.5" r="5.5" fill="#fff"></circle>
+                        <circle cx="60.5" cy="61.5" r="2.5" fill="#4a254b"></circle>
+                        <path fill="#6b96d6"
+                            d="m68.63,31.42h10.08c-.41-1.06-1.03-2.04-1.85-2.87-4.58-4.6-9.13-9.28-13.6-13.94-.9-.94-2-1.64-3.21-2.07l.02,10.32c.01,4.72,3.84,8.54,8.56,8.54Z">
+                        </path>
+                    </svg>
+                </div>
             </div>
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#4a90e2">
-                    <path
-                        d="M14 2H6C5.44772 2 5 2.44772 5 3V21C5 21.5523 5.44772 22 6 22H18C18.5523 22 19 21.5523 19 21V8L14 2Z" />
-                    <path d="M13 2.5V7H18.5L13 2.5Z" />
-                </svg>
-            </div>
+
         </div>
     </header>
     <main>
         <div class="container">
-            <div id="notification" class="notification">
-                Notification
-            </div>
+
         </div>
         <div class="container">
             <div class="column" id="upload-section">
                 <h2>Upload Files</h2>
-                <form id="uploadForm" enctype="multipart/form-data">
+                <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
                     <input type="file" name="file" id="fileInput" class="file-input">
                     <button type="submit" class="upload-button">Upload</button>
                 </form>
@@ -44,6 +62,10 @@
                                 keyTimes="0;1" values="0 25 25;360 25 25" />
                         </circle>
                     </svg>
+                </div>
+
+                <div id="notification" class="notification">
+                    Notification
                 </div>
             </div>
             <div class="columns">

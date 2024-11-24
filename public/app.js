@@ -62,7 +62,7 @@ async function loadFiles() {
             listItem.innerHTML = `
                 <a class="download-link" href="/download?fileName=${file}" download>${file}</a>
                 <button class="delete-button" data-filename="${file}">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="12" width="12" viewBox="0 0 24 24">
                         <path fill="red" d="M19 7L5 21M5 7l14 14" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
@@ -150,12 +150,18 @@ function showNotification(text, bg) {
     const notification = document.getElementById('notification'); // Reference to the notification box
 
     // Show the notification
+    notification.style.height = '50px';
     notification.style.opacity = '1';
+    notification.style.marginTop = '2rem';
+
     notification.innerHTML = text;
     notification.style.backgroundColor = bg;
 
     // Hide the notification after 5 seconds
     setTimeout(() => {
         notification.style.opacity = '0';
+        notification.style.height = '0';
+        notification.style.marginTop = '0';
+
     }, 5000);
 }
