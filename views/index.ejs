@@ -17,25 +17,33 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div>
-                    Filezzz
+                <div class="header-text">
+                    <span>Filezzz</span>
+                    <span class="header-intro">Simple scalable and anonymous file sharing platform</span>
                 </div>
 
                 <div>
                     <!-- https://icons8.com/icons/set/file -->
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="72" height="72"
                         viewBox="0 0 100 100">
-                        <path fill="#c9dcf4"
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ffd700" />
+                                <stop offset="50%" stop-color="#e6390a" />
+                                <stop offset="100%" stop-color="#c71585" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#gradient)"
                             d="m71.99,88.11c-14.66,1.19-29.31,1.19-43.97,0-3.67-.3-6.52-3.29-6.71-6.96-1.04-20.43-1.04-40.86,0-61.3.19-3.68,3.05-6.66,6.72-6.96,9.87-.8,19.74-1.06,29.62-.78,2.13.06,4.14.98,5.62,2.52,4.46,4.66,9.01,9.34,13.6,13.94,1.47,1.47,2.33,3.45,2.39,5.53.43,15.69.24,31.37-.55,47.06-.19,3.67-3.04,6.66-6.71,6.96Z">
                         </path>
-                        <path fill="#4a254b"
+                        <!-- <path fill="#4a254b"
                             d="m50,73c2.57,0,4.68-1.94,4.97-4.43.03-.3-.19-.57-.49-.57-1.73,0-7.22,0-8.95,0-.3,0-.53.27-.49.57.28,2.49,2.4,4.43,4.97,4.43Z">
-                        </path>
-                        <circle cx="39.5" cy="61.5" r="5.5" fill="#fff"></circle>
+                        </path> -->
+                        <!-- <circle cx="39.5" cy="61.5" r="5.5" fill="url(#gradient)"></circle>
                         <circle cx="39.5" cy="61.5" r="2.5" fill="#4a254b"></circle>
-                        <circle cx="60.5" cy="61.5" r="5.5" fill="#fff"></circle>
-                        <circle cx="60.5" cy="61.5" r="2.5" fill="#4a254b"></circle>
-                        <path fill="#6b96d6"
+                        <circle cx="60.5" cy="61.5" r="5.5" fill="url(#gradient)"></circle>
+                        <circle cx="60.5" cy="61.5" r="2.5" fill="#4a254b"></circle> -->
+                        <path fill="url(#gradient)"
                             d="m68.63,31.42h10.08c-.41-1.06-1.03-2.04-1.85-2.87-4.58-4.6-9.13-9.28-13.6-13.94-.9-.94-2-1.64-3.21-2.07l.02,10.32c.01,4.72,3.84,8.54,8.56,8.54Z">
                         </path>
                     </svg>
@@ -49,57 +57,72 @@
 
         </div>
         <div class="container">
-            <div class="column" id="upload-section">
-                <h2>Upload Files</h2>
-                <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
-                    <input type="file" name="file" id="fileInput" class="file-input">
-                    <button type="submit" class="upload-button">Upload</button>
-                </form>
-                <div id="loader" style="display: none;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#4a90e2" stroke-width="5"
-                            stroke-dasharray="100,200" stroke-linecap="round">
-                            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
-                                keyTimes="0;1" values="0 25 25;360 25 25" />
-                        </circle>
-                    </svg>
-                </div>
+            <div class="column-wrapper">
+                <div class="column" id="upload-section">
+                    <div class="">
+                        <h2>Upload Files</h2>
+                        <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+                            <input type="file" name="file" id="fileInput" class="file-input">
+                            <button type="submit" class="upload-button">Upload</button>
+                        </form>
+                        <div id="loader" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#4a90e2" stroke-width="5"
+                                    stroke-dasharray="100,200" stroke-linecap="round">
+                                    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite"
+                                        dur="1s" keyTimes="0;1" values="0 25 25;360 25 25" />
+                                </circle>
+                            </svg>
+                        </div>
 
-                <div id="notification" class="notification">
-                    Notification
+                        <div id="notification" class="notification">
+                            Notification
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
             <div class="columns">
                 <!-- Upload Files Section -->
                 <!-- Download Files Section -->
-                <div class="column" id="download-section">
-                    <h2>Files List</h2>
-                    <ul id="filelist" class="file-list">
-                        <!-- Files will be loaded here -->
-                    </ul>
+                <div class="column-wrapper">
+                    <div class="column" id="download-section">
+                        <h2>Files List</h2>
+                        <ul id="filelist" class="file-list">
+                            <!-- Files will be loaded here -->
+                        </ul>
+                    </div>
                 </div>
-                <!-- Live Ticker Section -->
-                <div class="column" id="ticker-section">
-                    <h2>Ticker</h2>
-                    <table class="ticker">
-                        <thead>
-                            <tr>
-                                <td>User</td>
-                                <td>Event</td>
-                                <td>File</td>
-                                <td>Timestamp</td>
-                            </tr>
-                        </thead>
-                        <tbody id="ticker">
 
-                        </tbody>
+                <div class="column-wrapper">
+                    <!-- Live Ticker Section -->
+                    <div class="column" id="ticker-section">
+                        <h2>Ticker</h2>
+                        <table class="ticker">
+                            <thead>
+                                <tr>
+                                    <td>User</td>
+                                    <td>Event</td>
+                                    <td>File</td>
+                                    <td>Timestamp</td>
+                                </tr>
+                            </thead>
+                            <tbody id="ticker">
 
-                    </table>
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </main>
+
     <footer>
+
         <div class="container">
             <div class="footer-content">
                 <div>
