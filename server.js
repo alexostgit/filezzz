@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const S3Service = require('./services/S3Service');
 const TickerService = require('./services/TickerService');
+const TickerServiceChat = require('./services/TickerServiceChat');
 const AWS = require('aws-sdk');
 const config = require('./config.json');
+const session = require('express-session');
 
 AWS.config.update({
     accessKeyId: config.AWS_ACCESS_KEY_ID,
@@ -18,8 +20,16 @@ require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.json()); // For parsing application/json
+
 app.use(express.static('public'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
+// Set up sessions
+app.use(session({
+    secret: 'your-secret-key', // Replace with a strong secret
+    resave: false,
+    saveUninitialized: true,
+}));
 
 const upload = multer();
 
@@ -86,6 +96,23 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+// Route for uploading files
+app.post('/send', upload.none(), async (req, res) => {
+    const chatmessage = req.body.message;
+    const user = req.body.user || 'Anonymous'; // Get the user from the request body, default to 'anonymous'
+
+    if (!chatmessage) {
+        console.log(chatmessage);
+
+        return res.status(400).send(chatmessage);
+    }
+
+    try {
+        await TickerServiceChat.chatChange(`${chatmessage}`, user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
 
 // Route for deleting files
 app.delete('/delete', async (req, res) => {
@@ -114,6 +141,43 @@ app.get('/ticker', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
+// Route for fetching ticker data
+app.get('/chatticker', async (req, res) => {
+    try {
+        const chats = await TickerServiceChat.getChats();
+        res.status(200).json(chats); // Publicly accessible
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Middleware to provide username in the session
+app.use((req, res, next) => {
+    if (!req.session.username) {
+        req.session.username = null; // Initialize username in session as null
+    }
+    next();
+});
+
+app.get('/', (req, res) => {
+    const username = req.session.username || null; // Retrieve username from the session
+    res.render('index', { username }); // Pass it to the EJS template
+});
+
+app.post('/set-username', (req, res) => {
+    const { username } = req.body;
+
+    if (!username || username.trim() === "") {
+        return res.status(400).send("Username is required.");
+    }
+
+    req.session.username = username.trim(); // Save the username in the session
+    console.log("Username set in session:", req.session.username); // Debug log
+    res.status(200).send("Username set successfully.");
+});
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -22,6 +22,8 @@
                     <span class="header-intro">Simple scalable and anonymous file sharing platform</span>
                 </div>
 
+
+
                 <div>
                     <!-- https://icons8.com/icons/set/file -->
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="72" height="72"
@@ -53,72 +55,129 @@
         </div>
     </header>
     <main>
-        <div class="container">
 
-        </div>
-        <div class="container">
-            <div class="column-wrapper">
-                <div class="column" id="upload-section">
-                    <div class="">
-                        <h2>Upload Files</h2>
-                        <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
-                            <input type="file" name="file" id="fileInput" class="file-input">
-                            <button type="submit" class="upload-button">Upload</button>
-                        </form>
-                        <div id="loader" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
-                                <circle cx="25" cy="25" r="20" fill="none" stroke="#4a90e2" stroke-width="5"
-                                    stroke-dasharray="100,200" stroke-linecap="round">
-                                    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite"
-                                        dur="1s" keyTimes="0;1" values="0 25 25;360 25 25" />
-                                </circle>
-                            </svg>
-                        </div>
+        <!-- Wenn nicht eingeloggt -->
 
-                        <div id="notification" class="notification">
-                            Notification
-                        </div>
-                    </div>
-
+        <% if (!username) { %>
+            <div class="container">
+                <div class="login-wrapper">
+                    <form id="submitusername">
+                        <input type="text" id="usernameInput" placeholder="Enter your username">
+                        <button type="submit">Login</button>
+                    </form>
                 </div>
             </div>
+            <% } else { %>
+                <!-- Ansonsten -->
+                <div class="container" id="main">
+                    <div class="columns">
 
-            <div class="columns">
-                <!-- Upload Files Section -->
-                <!-- Download Files Section -->
-                <div class="column-wrapper">
-                    <div class="column" id="download-section">
-                        <h2>Files List</h2>
-                        <ul id="filelist" class="file-list">
-                            <!-- Files will be loaded here -->
-                        </ul>
+                        <div class="column-wrapper">
+                            <div class="column" id="welcome-section">
+                                Welcome to Filezzz,
+                                <span id="username">
+                                    <%= username %>
+                                </span>
+
+
+                            </div>
+
+                        </div>
+                        <div class="column-wrapper">
+
+                            <div class="column" id="chat-section">
+                                <h2>Chat</h2>
+                                <div class="chat-wrapper">
+                                    <div id="chat">
+
+                                    </div>
+                                </div>
+                                <form id="chatForm" class="chat-form" enctype="multipart/form-data">
+                                    <textarea type="text" name="chat" id="chatInput" class="chat-input"></textarea>
+                                    <button type="submit" class="chat-submit"><svg fill="#fff" height="24px"
+                                            width="24px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 495.003 495.003"
+                                            xml:space="preserve">
+                                            <g id="XMLID_51_">
+                                                <path id="XMLID_53_" d="M164.711,456.687c0,2.966,1.647,5.686,4.266,7.072c2.617,1.385,5.799,1.207,8.245-0.468l55.09-37.616
+                                l-67.6-32.22V456.687z" />
+                                                <path id="XMLID_52_" d="M492.431,32.443c-1.513-1.395-3.466-2.125-5.44-2.125c-1.19,0-2.377,0.264-3.5,0.816L7.905,264.422
+                                c-4.861,2.389-7.937,7.353-7.904,12.783c0.033,5.423,3.161,10.353,8.057,12.689l125.342,59.724l250.62-205.99L164.455,364.414
+                                l156.145,74.4c1.918,0.919,4.012,1.376,6.084,1.376c1.768,0,3.519-0.322,5.186-0.977c3.637-1.438,6.527-4.318,7.97-7.956
+                                L494.436,41.257C495.66,38.188,494.862,34.679,492.431,32.443z" />
+                                            </g>
+                                        </svg></button>
+                                </form>
+
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <!-- Upload Files Section -->
+                        <!-- Download Files Section -->
+                        <div class="column-wrapper">
+                            <div class="column" id="download-section">
+                                <h2>Files List</h2>
+                                <ul id="filelist" class="file-list">
+                                    <!-- Files will be loaded here -->
+                                </ul>
+                                <div class="">
+                                    <h2>Upload Files</h2>
+                                    <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+                                        <input type="file" name="file" id="fileInput" class="file-input">
+                                        <button type="submit" class="upload-button">Upload</button>
+                                    </form>
+                                    <div id="loader" style="display: none;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="spinner" viewBox="0 0 50 50">
+                                            <circle cx="25" cy="25" r="20" fill="none" stroke="#4a90e2" stroke-width="5"
+                                                stroke-dasharray="100,200" stroke-linecap="round">
+                                                <animateTransform attributeName="transform" type="rotate"
+                                                    repeatCount="indefinite" dur="1s" keyTimes="0;1"
+                                                    values="0 25 25;360 25 25" />
+                                            </circle>
+                                        </svg>
+                                    </div>
+
+                                    <div id="notification" class="notification">
+                                        Notification
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column-wrapper">
+                            <!-- Live Ticker Section -->
+                            <div class="column" id="ticker-section">
+                                <h2>Ticker</h2>
+                                <table class="ticker">
+                                    <thead>
+                                        <tr>
+                                            <td>User</td>
+                                            <td>Event</td>
+                                            <td>File</td>
+                                            <td>Timestamp</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ticker">
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
+                <% } %>
 
-                <div class="column-wrapper">
-                    <!-- Live Ticker Section -->
-                    <div class="column" id="ticker-section">
-                        <h2>Ticker</h2>
-                        <table class="ticker">
-                            <thead>
-                                <tr>
-                                    <td>User</td>
-                                    <td>Event</td>
-                                    <td>File</td>
-                                    <td>Timestamp</td>
-                                </tr>
-                            </thead>
-                            <tbody id="ticker">
-
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
     </main>
 
     <footer>
