@@ -1,7 +1,8 @@
-// const currentUser = getCurrentUser();
 document.addEventListener("DOMContentLoaded", function (event) {
+
     var element = document.getElementById('main');
     if (typeof (element) != 'undefined' && element != null) {
+        const currentUser = getCurrentUser();
 
         document.getElementById('chatForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -83,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
             } catch (error) {
                 console.error("Upload error:", error);
-                alert("An error occurred during the upload. Please try again.");
             } finally {
                 // Hide the loader
                 loader.style.display = 'none';
@@ -202,13 +202,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 };
 
                 // Render sorted logs
+                let currentUser = getCurrentUser();
+                console.log(currentUser);
+
                 document.getElementById('chat').innerHTML = logs.map(log => `
-            <div class="chat-message">
-                
-                <div class="message-message">${log.message}</div>
+            <div class="chat-message ${log.user.trim() == currentUser ? 'my-chat-message' : 'other'}">
+
+                <div class= "message-message" > ${log.message}</div>
                 <div class="message-footer"><div class="message-user">${log.user}</div><div class="message-time">${formatTimestamp(log.timestamp)}</div></div>
                 
-            </div>`).join('');
+            </div> `).join('');
+
+
                 // const chatContainer = document.getElementById("chat").scrollHeight;
                 // console.log(chatContainer);
                 // chatContainer.scrollTop = chatContainer;
@@ -229,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 loader.style.display = 'flex';
                 const user = getCurrentUser();
 
-                const response = await fetch(`/delete?fileName=${fileName}&user=${user}`, { method: 'DELETE' });
+                const response = await fetch(`/ delete? fileName = ${fileName} & user=${user}`, { method: 'DELETE' });
                 if (!response.ok) {
                     throw new Error(`Failed to delete file: ${response.status} - ${response.statusText}`);
                 }
@@ -282,10 +287,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         function getCurrentUser() {
 
-            const user = document.getElementById('username').innerHTML;
+            const user = document.getElementById('username').innerHTML.trim();
 
             return user;
         }
+        document.getElementById('logoutButton')?.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (response.ok) {
+                    location.reload(); // Reload to reflect logout
+                } else {
+                    alert("Failed to log out. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error logging out:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
     } else {
         document.getElementById('submitusername').addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent form submission
@@ -306,7 +328,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 });
 
                 if (response.ok) {
-                    alert("Username set successfully!");
 
                     location.reload(); // Reload the page to reflect the username change
                 } else {

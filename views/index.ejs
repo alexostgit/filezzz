@@ -63,7 +63,7 @@
                 <div class="login-wrapper">
                     <form id="submitusername">
                         <input type="text" id="usernameInput" placeholder="Enter your username">
-                        <button type="submit">Login</button>
+                        <button id="loginButton" type="submit">Login</button>
                     </form>
                 </div>
             </div>
@@ -74,11 +74,17 @@
 
                         <div class="column-wrapper">
                             <div class="column" id="welcome-section">
-                                Welcome to Filezzz,
-                                <span id="username">
-                                    <%= username %>
-                                </span>
+                                <div>
+                                    Welcome to Filezzz,
+                                    <span id="username">
+                                        <%= username %>
+                                    </span>
+                                </div>
 
+
+                                <div class="logout-wrapper">
+                                    <button id="logoutButton">Logout</button>
+                                </div>
 
                             </div>
 
@@ -128,8 +134,8 @@
                                 <ul id="filelist" class="file-list">
                                     <!-- Files will be loaded here -->
                                 </ul>
-                                <div class="">
-                                    <h2>Upload Files</h2>
+                                <div class="upload--wrapper">
+                                    <h3>Upload Files</h3>
                                     <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
                                         <input type="file" name="file" id="fileInput" class="file-input">
                                         <button type="submit" class="upload-button">Upload</button>

@@ -17,26 +17,32 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 require('dotenv').config();
-
+const upload = multer();
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json()); // For parsing application/json
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
+
 // Set up sessions
 app.use(session({
     secret: 'your-secret-key', // Replace with a strong secret
     resave: false,
     saveUninitialized: true,
 }));
+// Middleware to provide username in the session
+app.use((req, res, next) => {
+    if (!req.session.username) {
+        req.session.username = null; // Initialize username in session as null
+    }
+    next();
+});
 
-const upload = multer();
 
-// Home route
 app.get('/', (req, res) => {
-    const currentUser = req.user ? req.user.displayName : 'SERVER FALLBACK'; // Use Google OAuth username if logged in, else "Anonym"
-    res.render('index', { currentUser });
+    const username = req.session.username; // Use session username or fallback
+    res.render('index', { username });
 });
 
 // Route to list files for download
@@ -152,18 +158,8 @@ app.get('/chatticker', async (req, res) => {
     }
 });
 
-// Middleware to provide username in the session
-app.use((req, res, next) => {
-    if (!req.session.username) {
-        req.session.username = null; // Initialize username in session as null
-    }
-    next();
-});
 
-app.get('/', (req, res) => {
-    const username = req.session.username || null; // Retrieve username from the session
-    res.render('index', { username }); // Pass it to the EJS template
-});
+
 
 app.post('/set-username', (req, res) => {
     const { username } = req.body;
@@ -173,11 +169,19 @@ app.post('/set-username', (req, res) => {
     }
 
     req.session.username = username.trim(); // Save the username in the session
-    console.log("Username set in session:", req.session.username); // Debug log
+    console.log("Set Username:", req.session.username); // Debugging
     res.status(200).send("Username set successfully.");
 });
 
-
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Failed to destroy session:", err);
+            return res.status(500).send("Failed to log out.");
+        }
+        res.status(200).send("Logged out successfully.");
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
