@@ -5,5 +5,5 @@
     "AWS_REGION": "us-east-1",
     "S3_BUCKET_NAME": "filezzz-bucket",
     "DYNAMODB_TABLE_NAME": "filezzz-table",
-    "DYNAMODB_TABLE_NAME_CHAT": "filezzz-chat",
+    "DYNAMODB_TABLE_NAME_CHAT": "filezzz-chat"
 }
