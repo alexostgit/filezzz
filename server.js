@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 });
 
 
+
 app.get('/', (req, res) => {
     const username = req.session.username; // Use session username or fallback
     res.render('index', { username });
@@ -185,7 +186,6 @@ app.post('/logout', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
 
 
 

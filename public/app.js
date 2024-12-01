@@ -300,12 +300,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 if (response.ok) {
                     location.reload(); // Reload to reflect logout
-                } else {
-                    alert("Failed to log out. Please try again.");
                 }
             } catch (error) {
                 console.error("Error logging out:", error);
-                alert("An error occurred. Please try again.");
             }
         });
     } else {
