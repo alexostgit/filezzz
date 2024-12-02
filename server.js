@@ -7,6 +7,7 @@ const TickerServiceChat = require('./services/TickerServiceChat');
 const AWS = require('aws-sdk');
 const config = require('./config.json');
 const session = require('express-session');
+const path = require('path');
 
 AWS.config.update({
     accessKeyId: config.AWS_ACCESS_KEY_ID,
