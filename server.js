@@ -23,7 +23,8 @@ app.use(bodyParser.json());
 app.use(express.json()); // For parsing application/json
 
 app.use(express.static('public'));
-app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // 'views' directory
 
 // Set up sessions
 app.use(session({
@@ -39,11 +40,12 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', (req, res) => {
     const username = req.session.username; // Use session username or fallback
-    res.render('views/index', { username });
+    res.render('index', { username });
 });
 
 // Route to list files for download
