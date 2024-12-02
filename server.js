@@ -184,7 +184,7 @@ app.post('/logout', (req, res) => {
 
 app.get('/', (req, res) => {
     const username = req.session.username; // Use session username or fallback
-    res.render('index', { username });
+    res.render('views/index', { username });
 });
 
 const PORT = process.env.PORT || 3000;
