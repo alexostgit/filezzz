@@ -247,7 +247,9 @@ h2 {
     margin-bottom: 1rem;
 }
 
-
+.font-small {
+    font-size: 8px;
+}
 
 .ticker tr td {
     padding: 0.5rem 1rem 0.5rem 0;

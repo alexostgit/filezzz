@@ -21,16 +21,29 @@ const S3Service = {
         const data = await s3.listObjectsV2(params).promise();
 
 
-        const files = data.Contents.map(item => ({ name: item.Key, type: item.Type, size: item.Size }));
+        const files = await Promise.all(
+            data.Contents.map(async (item) => {
+                const metadata = await s3.headObject({ Bucket: bucketName, Key: item.Key }).promise();
+                return {
+                    name: item.Key,
+                    type: metadata.ContentType || "unknown", // Get content type if available
+                    size: item.Size,
+                    user: metadata.Metadata.user || "unknown" // Retrieve user metadata
+                };
+            })
+        );
 
         files.sort((a, b) => a.name.localeCompare(b.name));
         return files;
     },
-    uploadFile: async (file) => {
+    uploadFile: async (file, user) => {
         const params = {
             Bucket: bucketName,
             Key: file.name,
-            Body: file.content
+            Body: file.content,
+            Metadata: {
+                user: user // Replace "your-username" with the actual user value
+            }
         };
         return s3.upload(params).promise();
     },

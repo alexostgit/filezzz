@@ -8,6 +8,7 @@ const AWS = require('aws-sdk');
 const config = require('./config.json');
 const session = require('express-session');
 const path = require('path');
+const { log } = require('console');
 
 AWS.config.update({
     accessKeyId: config.AWS_ACCESS_KEY_ID,
@@ -85,7 +86,7 @@ app.get('/download', async (req, res) => {
 app.post('/upload', upload.single('file'), async (req, res) => {
     const file = req.file;
     const user = req.body.user || 'Uploader anonymous'; // Get the user from the request body, default to 'anonymous'
-
+    console.log(user);
     if (!file) {
         return res.status(400).send("No file uploaded.");
     }
@@ -94,7 +95,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         const result = await S3Service.uploadFile({
             name: file.originalname,
             content: file.buffer,
-        });
+        }, user);
         await TickerService.logChange(`${file.originalname}`, 'uploaded', user);
         res.status(200).json(result);
     } catch (error) {
@@ -178,6 +179,8 @@ app.post('/logout', (req, res) => {
             console.error("Failed to destroy session:", err);
             return res.status(500).send("Failed to log out.");
         }
+        console.log("User logged out successfully"); // Debugging
+
         res.status(200).send("Logged out successfully.");
     });
 });
