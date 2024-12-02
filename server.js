@@ -25,12 +25,6 @@ app.use(express.json()); // For parsing application/json
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // 'views' directory
-
-
-app.get('/', (req, res) => {
-    const username = req.session.username; // Use session username or fallback
-    res.render('index', { username });
-});
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -188,7 +182,10 @@ app.post('/logout', (req, res) => {
     });
 });
 
-
+app.get('/', (req, res) => {
+    const username = req.session.username; // Use session username or fallback
+    res.render('index', { username });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
