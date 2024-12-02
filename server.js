@@ -23,9 +23,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.json()); // For parsing application/json
 
-app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // 'views' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
 
 // Set up sessions
 app.use(session({
@@ -39,15 +42,6 @@ app.use((req, res, next) => {
         req.session.username = null; // Initialize username in session as null
     }
     next();
-});
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.get('/', (req, res) => {
-    const username = req.session.username; // Use session username or fallback
-    console.log(path.join(__dirname, 'views'));
-    res.render('index', { username });
 });
 
 // Route to list files for download
@@ -186,6 +180,11 @@ app.post('/logout', (req, res) => {
         }
         res.status(200).send("Logged out successfully.");
     });
+});
+
+app.get('/', (req, res) => {
+    const username = req.session.username; // Use session username or fallback
+    res.render('index', { username });
 });
 
 const PORT = process.env.PORT || 3000;
