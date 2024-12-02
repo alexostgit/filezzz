@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     const username = req.session.username; // Use session username or fallback
-    res.render('index', { username });
+    res.render('views/index', { username });
 });
 
 // Route to list files for download
