@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     const username = req.session.username; // Use session username or fallback
+    console.log(path.join(__dirname, 'views'));
     res.render('index', { username });
 });
 
